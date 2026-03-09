@@ -6,10 +6,7 @@ import { AppointmentPage } from '../page-objects/AppointmentPage';
 test('Verify make appointment success', async ({ page }) => {
   const loginPage = new LoginPage(page);
 
-  await loginPage.login(process.env.APP_USERNAME, process.env.PASSWORD);
-  console.log('process.env.APP_USERNAME', process.env.APP_USERNAME);
-  console.log('process.env.PASSWORD', process.env.PASSWORD);
-
+  await loginPage.login(process.env.APP_USERNAME, process.env.APP_PASSWORD);
   await expect(
     page.getByRole('heading', { name: 'Make Appointment' }),
   ).toBeVisible();
