@@ -1,9 +1,9 @@
 {
-  "facility": "Hongkong CURA Healthcare Center",
-  "healthcareProgram": "Medicaid",
+  "facility": "Seoul CURA Healthcare Center",
+  "healthcareProgram": "None",
   "visitDate": {
-    "day": "2",
+    "day": "10",
     "month": "Apr"
   },
-  "comment": "test comment"
+  "comment": "No comment"
 }

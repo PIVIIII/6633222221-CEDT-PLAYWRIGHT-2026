@@ -1,63 +1,57 @@
-import fieldInfo from '../test-data/field_info.json';
+import { expect } from '@playwright/test';
+import Field from '../test-data/field_header.json';
 
 export class AppointmentPage {
   constructor(page) {
     this.page = page;
   }
 
+  async verifyMakeAppointmentPage() {
+    await expect(
+      this.page.getByRole('heading', { name: 'Make Appointment' }),
+    ).toBeVisible();
+  }
   async makeAppointment(validInput) {
     await this.page
-      .getByLabel(fieldInfo.facility.label)
+      .getByLabel(Field.facility.label)
       .selectOption(validInput.facility);
 
     await this.page
-      .getByRole(fieldInfo.readmission.role, {
-        name: fieldInfo.readmission.name,
+      .getByRole(Field.readmission.role, {
+        name: Field.readmission.name,
       })
       .check();
 
     await this.page
-      .getByRole(fieldInfo.healthcareProgram.role, {
+      .getByRole(Field.healthcareProgram.role, {
         name: validInput.healthcareProgram,
       })
       .check();
 
-    const monthNames = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ];
-    const currentMonthName = monthNames[new Date().getMonth()];
-    await this.page.locator(fieldInfo.visitDate.locator).click();
+    await this.page.locator(Field.visitDate.locator).click();
+
     await this.page
-      .getByRole(fieldInfo.visitDate.month.role, { name: currentMonthName })
-      .click();
-    await this.page.getByText(validInput.visitDate.month).click();
-    await this.page
-      .getByRole(fieldInfo.visitDate.day.role, {
+      .getByRole(Field.visitDate.day.role, {
         name: validInput.visitDate.day,
       })
-      .nth(5)
       .click();
 
     await this.page
-      .getByRole(fieldInfo.comment.role, { name: fieldInfo.comment.name })
+      .getByRole(Field.comment.role, { name: Field.comment.name })
       .click();
+
     await this.page
-      .getByRole(fieldInfo.comment.role, { name: fieldInfo.comment.name })
+      .getByRole(Field.comment.role, { name: Field.comment.name })
       .fill(validInput.comment);
 
     await this.page
-      .getByRole(fieldInfo.submit.role, { name: fieldInfo.submit.name })
+      .getByRole(Field.submit.role, { name: Field.submit.name })
       .click();
+  }
+
+  async AppointmentSuccess() {
+    await expect(
+      this.page.getByRole('heading', { name: 'Appointment Confirmation' }),
+    ).toBeVisible();
   }
 }
