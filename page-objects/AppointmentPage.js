@@ -1,34 +1,26 @@
-import fieldData from '../test-data/field_data.json';
+import fieldInfo from '../test-data/field_info.json';
 
-export class MakeAppointmentPage {
+export class AppointmentPage {
   constructor(page) {
     this.page = page;
   }
 
   async makeAppointment(validInput) {
-    // 1. เลือก Facility
     await this.page
-      .getByLabel(fieldData.facility.label)
+      .getByLabel(fieldInfo.facility.label)
       .selectOption(validInput.facility);
 
-    // 2. ติ๊ก Readmission
-    if (validInput.readmission) {
-      await this.page
-        .getByRole(fieldData.readmission.role, {
-          name: fieldData.readmission.name,
-        })
-        .check();
-    }
-
-    // 3. เลือก Healthcare Program
     await this.page
-      .getByRole(fieldData.healthcareProgram.role, {
-        name: validInput.healthcareProgram,
+      .getByRole(fieldInfo.readmission.role, {
+        name: fieldInfo.readmission.name,
       })
       .check();
 
-    // 4. จัดการปฏิทิน (Date Picker)
-    await this.page.locator(fieldData.visitDate.locator).click();
+    await this.page
+      .getByRole(fieldInfo.healthcareProgram.role, {
+        name: validInput.healthcareProgram,
+      })
+      .check();
 
     const monthNames = [
       'January',
@@ -45,34 +37,27 @@ export class MakeAppointmentPage {
       'December',
     ];
     const currentMonthName = monthNames[new Date().getMonth()];
-
-    // คลิกที่หัวปฏิทินเพื่อถอยออกมาหน้าเลือกเดือน (ถ้าจำเป็น)
+    await this.page.locator(fieldInfo.visitDate.locator).click();
     await this.page
-      .getByRole(fieldData.visitDate.month.role, { name: currentMonthName })
+      .getByRole(fieldInfo.visitDate.month.role, { name: currentMonthName })
       .click();
-
-    // แก้ไขจุดที่ Error: ใช้ { exact: true } เพื่อให้คลิกที่ปุ่มเดือน 'Mar' เท่านั้น
+    await this.page.getByText(validInput.visitDate.month).click();
     await this.page
-      .getByText(validInput.visitDate.month, { exact: true })
-      .click();
-
-    // แก้ไขการเลือกวันที่: เปลี่ยนจาก .nth(5) เป็นการระบุวันที่ที่มองเห็นได้จริง
-    await this.page
-      .getByRole(fieldData.visitDate.day.role, {
+      .getByRole(fieldInfo.visitDate.day.role, {
         name: validInput.visitDate.day,
-        exact: true,
       })
-      .filter({ visible: true }) // ป้องกันกรณีเลขวันที่ซ้ำกับเดือนก่อนหน้า/ถัดไป
+      .nth(5)
       .click();
 
-    // 5. กรอก Comment
     await this.page
-      .getByRole(fieldData.comment.role, { name: fieldData.comment.name })
+      .getByRole(fieldInfo.comment.role, { name: fieldInfo.comment.name })
+      .click();
+    await this.page
+      .getByRole(fieldInfo.comment.role, { name: fieldInfo.comment.name })
       .fill(validInput.comment);
 
-    // 6. กดปุ่ม Submit
     await this.page
-      .getByRole(fieldData.submit.role, { name: fieldData.submit.name })
+      .getByRole(fieldInfo.submit.role, { name: fieldInfo.submit.name })
       .click();
   }
 }

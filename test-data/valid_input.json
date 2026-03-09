@@ -1,10 +1,9 @@
 {
-  "facility": "Seoul CURA Healthcare Center",
-  "readmission": true,
-  "healthcareProgram": "None",
+  "facility": "Hongkong CURA Healthcare Center",
+  "healthcareProgram": "Medicaid",
   "visitDate": {
-    "day": "15",
-    "month": "Mar"
+    "day": "2",
+    "month": "Apr"
   },
-  "comment": "This is Playwright Testing."
+  "comment": "test comment"
 }
