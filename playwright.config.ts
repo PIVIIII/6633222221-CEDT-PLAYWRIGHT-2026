@@ -28,15 +28,8 @@ export default defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    /* Base URL to use in actions like `await page.goto('')`. */
-    // baseURL: 'http://localhost:3000',
-
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
-    baseURL:
-      process.env.STAGING === '1'
-        ? 'http://staging.example.test/'
-        : 'http://example.test/',
+    baseURL: 'https://katalon-demo-cura.herokuapp.com/',
   },
 
   /* Configure projects for major browsers */
