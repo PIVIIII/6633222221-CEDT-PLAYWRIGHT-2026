@@ -3,7 +3,7 @@ require('dotenv').config();
 export class LoginPage {
   constructor(page) {
     this.page = page;
-    this.username = process.env.APP_USER || '';
+    this.username = process.env.USERNAME || '';
     this.password = process.env.PASSWORD || '';
     this.url = process.env.URL || '';
   }
